@@ -1,7 +1,3 @@
-/* const food = "Pizza"; // Replace with your desired food
-const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${food}`;
-console.log(url); // Output: https://www.themealdb.com/api/json/v1/1/search.php?s=Pizza */
-
 const disPlayPizza = (data) => {
   const pizzaDiv = document.getElementById('pizzas');
   const pizza = data.meals[0];
@@ -34,5 +30,3 @@ const pizza = () => {
     .then(res => res.json())
     .then(data => disPlayPizza(data));
 };
-pizza();
-
