@@ -11,13 +11,8 @@
 <script>
 const myNodelist = document.querySelectorAll("p");
 
-const paragraphInfo = {
-  firstParagraph: myNodelist[0].innerHTML,
-  secondParagraph: myNodelist[1].innerHTML
-};
-
-document.getElementById("demo").innerHTML = "The innerHTML of the second paragraph is: " + paragraphInfo.secondParagraph;
-
+document.getElementById("demo").innerHTML = 
+  `The innerHTML of the second paragraph is: ${myNodelist[1].innerHTML}`;
 </script>
 
 </body>
