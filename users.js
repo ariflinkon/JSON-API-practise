@@ -1,14 +1,14 @@
-const users = async () => {
+const fetchUsers = async () => {
     try {
-        const fetchRequest = await fetch('https://jsonplaceholder.typicode.com/users');
-        if (!fetchRequest.ok) {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+        if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        const data = await fetchRequest.json();
-        console.log(data);
+        const usersData = await response.json();
+        console.log(usersData);
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
     }
 }
 
-document.getElementById('fetchUsers').addEventListener('click', users);
+document.getElementById('fetchUsers').addEventListener('click', fetchUsers);
