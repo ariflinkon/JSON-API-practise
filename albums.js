@@ -1,7 +1,8 @@
-
-const comments = async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/albums');
-    const data = await response.json();
-    console.log(data);
+function fetchComments() {
+    fetch('https://jsonplaceholder.typicode.com/albums')
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error fetching data:', error));
 }
-comments();
+
+fetchComments();
