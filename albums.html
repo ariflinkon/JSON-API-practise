@@ -5,8 +5,8 @@
     <title>Albums</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div id="albums"></div>
+<body class="bg-gray-100">
+    <div id="albums" class="p-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
     <script>
         const fetchAlbums = async () => {
             try {
@@ -19,6 +19,7 @@
                 data.forEach(album => {
                     const albumElement = document.createElement('div');
                     albumElement.textContent = album.title;
+                    albumElement.className = "bg-white p-4 rounded shadow";
                     albumsDiv.appendChild(albumElement);
                 });
             } catch (error) {
