@@ -1,13 +1,12 @@
-// New method to fetch and display phone data
-const loadPhone = async () => { 
-    try {
-        const res = await fetch('https://openai.programminghero.com/api/phones?search=iphone');
-        const data = await res.json();
-        const phones = data.results;
-        displayPhones(phones);
-    } catch (error) {
-        console.error("Error fetching phone data:", error);
-    }
+// New method to fetch and display phone data using callbacks
+const loadPhoneWithCallback = (callback) => {
+    fetch('https://openai.programminghero.com/api/phones?search=iphone')
+        .then(res => res.json())
+        .then(data => {
+            const phones = data.results;
+            callback(null, phones);
+        })
+        .catch(error => callback(error, null));
 };
 
 // Method to display phone data
@@ -17,5 +16,11 @@ const displayPhones = phones => {
     });
 };
 
-// Call the loadPhone method
-loadPhone();
+// Call the loadPhoneWithCallback method
+loadPhoneWithCallback((error, phones) => {
+    if (error) {
+        console.error("Error fetching phone data:", error);
+    } else {
+        displayPhones(phones);
+    }
+});
