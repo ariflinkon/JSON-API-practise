@@ -18,5 +18,33 @@ async function fetchCommentsByPostId(postId) {
     }
 }
 
-fetchComments();
-fetchCommentsByPostId(1);
+function fetchCommentsWithCallback(callback) {
+    fetch('https://jsonplaceholder.typicode.com/comments')
+        .then(response => response.json())
+        .then(data => callback(null, data))
+        .catch(error => callback(error, null));
+}
+
+function fetchCommentsByPostIdWithCallback(postId, callback) {
+    fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
+        .then(response => response.json())
+        .then(data => callback(null, data))
+        .catch(error => callback(error, null));
+}
+
+// Example usage with callbacks
+fetchCommentsWithCallback((error, data) => {
+    if (error) {
+        console.error('Error fetching comments:', error);
+    } else {
+        console.log(data);
+    }
+});
+
+fetchCommentsByPostIdWithCallback(1, (error, data) => {
+    if (error) {
+        console.error('Error fetching comments for post ID 1:', error);
+    } else {
+        console.log(data);
+    }
+});
