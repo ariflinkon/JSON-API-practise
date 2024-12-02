@@ -7,11 +7,21 @@ function fetchUsers() {
             return response.json();
         })
         .then(usersData => {
-            console.log(usersData);
+            displayUsers(usersData);
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
         });
+}
+
+function displayUsers(users) {
+    const usersList = document.getElementById('usersList');
+    usersList.innerHTML = ''; // Clear any existing content
+    users.forEach(user => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${user.name} (${user.email})`;
+        usersList.appendChild(listItem);
+    });
 }
 
 document.getElementById('fetchUsers').addEventListener('click', fetchUsers);
