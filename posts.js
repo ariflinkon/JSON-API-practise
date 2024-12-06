@@ -1,5 +1,5 @@
-function fetchPosts() {
-    fetch('https://jsonplaceholder.typicode.com/posts')
+function fetchPosts(url) {
+    fetch(url)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -14,4 +14,5 @@ function fetchPosts() {
         });
 }
 
-fetchPosts();
+// Call the function with a dynamic URL
+fetchPosts('https://jsonplaceholder.typicode.com/posts');
