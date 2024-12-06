@@ -1,6 +1,6 @@
-async function fetchComments() {
+async function fetchComments(baseUrl) {
     try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/comments');
+        const response = await fetch(`${baseUrl}/comments`);
         const data = await response.json();
         console.log(data);
     } catch (error) {
@@ -8,9 +8,9 @@ async function fetchComments() {
     }
 }
 
-async function fetchCommentsByPostId(postId) {
+async function fetchCommentsByPostId(baseUrl, postId) {
     try {
-        const response = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`);
+        const response = await fetch(`${baseUrl}/comments?postId=${postId}`);
         const data = await response.json();
         console.log(data);
     } catch (error) {
@@ -18,22 +18,24 @@ async function fetchCommentsByPostId(postId) {
     }
 }
 
-function fetchCommentsWithCallback(callback) {
-    fetch('https://jsonplaceholder.typicode.com/comments')
+function fetchCommentsWithCallback(baseUrl, callback) {
+    fetch(`${baseUrl}/comments`)
         .then(response => response.json())
         .then(data => callback(null, data))
         .catch(error => callback(error, null));
 }
 
-function fetchCommentsByPostIdWithCallback(postId, callback) {
-    fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
+function fetchCommentsByPostIdWithCallback(baseUrl, postId, callback) {
+    fetch(`${baseUrl}/comments?postId=${postId}`)
         .then(response => response.json())
         .then(data => callback(null, data))
         .catch(error => callback(error, null));
 }
 
 // Example usage with callbacks
-fetchCommentsWithCallback((error, data) => {
+const baseUrl = 'https://jsonplaceholder.typicode.com';
+
+fetchCommentsWithCallback(baseUrl, (error, data) => {
     if (error) {
         console.error('Error fetching comments:', error);
     } else {
@@ -41,7 +43,7 @@ fetchCommentsWithCallback((error, data) => {
     }
 });
 
-fetchCommentsByPostIdWithCallback(1, (error, data) => {
+fetchCommentsByPostIdWithCallback(baseUrl, 1, (error, data) => {
     if (error) {
         console.error('Error fetching comments for post ID 1:', error);
     } else {
