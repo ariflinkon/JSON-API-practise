@@ -16,7 +16,7 @@ const displayPhotos = (data) => {
         const photoItem = document.createElement('div');
         photoItem.className = 'p-4 bg-gray-100 rounded shadow';
         photoItem.innerHTML = `
-            <img src="${photo.thumbnailUrl}" alt="${photo.title}" class="w-full h-auto mb-2 rounded">
+            <img src="${photo.thumbnailUrl}" alt="${photo.title}" class="w-full h-auto mb-2 rounded border border-gray-300">
             <p class="text-sm">${photo.title}</p>
         `;
         photosContainer.appendChild(photoItem);
