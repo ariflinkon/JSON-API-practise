@@ -1,5 +1,5 @@
-const fetchPhotos = () => {
-    fetch('https://jsonplaceholder.typicode.com/photos')
+const fetchPhotos = (url) => {
+    fetch(url)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -23,4 +23,5 @@ const displayPhotos = (data) => {
     });
 };
 
-fetchPhotos();
+// Call the function with a dynamic URL
+fetchPhotos('https://jsonplaceholder.typicode.com/photos');
