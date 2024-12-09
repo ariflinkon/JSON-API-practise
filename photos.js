@@ -1,13 +1,14 @@
-const fetchPhotos = (url) => {
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => displayPhotos(data))
-        .catch(error => console.error('Error fetching photos:', error));
+const fetchPhotos = async (url) => {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        displayPhotos(data);
+    } catch (error) {
+        console.error('Error fetching photos:', error);
+    }
 };
 
 const displayPhotos = (data) => {
