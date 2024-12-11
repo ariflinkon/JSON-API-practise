@@ -6,7 +6,8 @@ const fetchPhotos = async (url) => {
         }
         const data = await response.json();
         const filteredData = filterPhotosByAlbum(data, 1); // Filter photos by album ID 1
-        displayPhotos(filteredData);
+        const sortedData = sortPhotosByTitle(filteredData); // Sort photos by title
+        displayPhotos(sortedData);
     } catch (error) {
         console.error('Error fetching photos:', error);
     }
@@ -14,6 +15,10 @@ const fetchPhotos = async (url) => {
 
 const filterPhotosByAlbum = (data, albumId) => {
     return data.filter(photo => photo.albumId === albumId);
+};
+
+const sortPhotosByTitle = (data) => {
+    return data.sort((a, b) => a.title.localeCompare(b.title));
 };
 
 const displayPhotos = (data) => {
