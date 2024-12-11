@@ -5,10 +5,15 @@ const fetchPhotos = async (url) => {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        displayPhotos(data);
+        const filteredData = filterPhotosByAlbum(data, 1); // Filter photos by album ID 1
+        displayPhotos(filteredData);
     } catch (error) {
         console.error('Error fetching photos:', error);
     }
+};
+
+const filterPhotosByAlbum = (data, albumId) => {
+    return data.filter(photo => photo.albumId === albumId);
 };
 
 const displayPhotos = (data) => {
