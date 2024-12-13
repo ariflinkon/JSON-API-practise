@@ -2,14 +2,26 @@ async function fetchPosts(url) {
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error(`Network response was not ok: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log(data);
+        return data;
     } catch (error) {
         console.error('Error fetching posts:', error);
+        return null;
+    }
+}
+
+async function displayPosts(url) {
+    const posts = await fetchPosts(url);
+    if (posts) {
+        posts.forEach(post => {
+            console.log(`Title: ${post.title}`);
+            console.log(`Body: ${post.body}`);
+            console.log('---');
+        });
     }
 }
 
 // Call the function with a dynamic URL
-fetchPosts('https://jsonplaceholder.typicode.com/posts');
+displayPosts('https://jsonplaceholder.typicode.com/posts');
