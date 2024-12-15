@@ -23,5 +23,16 @@ async function displayPosts(url) {
     }
 }
 
+function logPostTitles(posts) {
+    if (posts) {
+        posts.forEach(post => {
+            console.log(`Title: ${post.title}`);
+        });
+    }
+}
+
 // Call the function with a dynamic URL
 displayPosts('https://jsonplaceholder.typicode.com/posts');
+
+// Example usage of the new method
+fetchPosts('https://jsonplaceholder.typicode.com/posts').then(logPostTitles);
