@@ -39,4 +39,9 @@ const myDisplay = (data) => {
   }
 }
 
+const anotherMethod = () => {
+  console.log('This is another method');
+  // You can add more functionality here
+}
+
 document.getElementById('submit').addEventListener('click', Meals);
