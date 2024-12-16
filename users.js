@@ -1,17 +1,14 @@
-function fetchUsers() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(usersData => {
-            displayUsers(usersData);
-        })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        });
+async function fetchUsers() {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const usersData = await response.json();
+        displayUsers(usersData);
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+    }
 }
 
 function displayUsers(users) {
