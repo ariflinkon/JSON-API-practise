@@ -10,6 +10,17 @@ const loadPhoneWithAsync = async () => {
     }
 };
 
+// New method to fetch phone data using Promises
+const loadPhoneWithPromise = () => {
+    return fetch('https://openai.programminghero.com/api/phones?search=iphone')
+        .then(response => response.json())
+        .then(data => data.data)
+        .catch(error => {
+            console.error("Error fetching phone data with promise:", error);
+            throw error; // Re-throw the error for further handling
+        });
+};
+
 // Method to display phone data
 const displayPhones = phones => {
     phones.forEach(phone => {
@@ -28,4 +39,15 @@ const fetchAndDisplayPhones = async () => {
     }
 };
 
+// Call the loadPhoneWithPromise method
+const fetchAndDisplayPhonesWithPromise = () => {
+    loadPhoneWithPromise()
+        .then(phones => displayPhones(phones))
+        .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error("Error handling in promise function:", error);
+        });
+};
+
 fetchAndDisplayPhones();
+fetchAndDisplayPhonesWithPromise();
