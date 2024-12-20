@@ -1,24 +1,13 @@
-// New method to fetch phone data using async/await
-const loadPhoneWithAsync = async () => {
+// Function to fetch phone data
+const fetchPhoneData = async (url) => {
     try {
-        const response = await fetch('https://openai.programminghero.com/api/phones?search=iphone');
+        const response = await fetch(url);
         const data = await response.json();
         return data.data; // Return the phone data
     } catch (error) {
         console.error("Error fetching phone data:", error);
         throw error; // Re-throw the error for further handling
     }
-};
-
-// New method to fetch phone data using Promises
-const loadPhoneWithPromise = () => {
-    return fetch('https://openai.programminghero.com/api/phones?search=iphone')
-        .then(response => response.json())
-        .then(data => data.data)
-        .catch(error => {
-            console.error("Error fetching phone data with promise:", error);
-            throw error; // Re-throw the error for further handling
-        });
 };
 
 // Method to display phone data
@@ -28,10 +17,10 @@ const displayPhones = phones => {
     });
 };
 
-// Call the loadPhoneWithAsync method
-const fetchAndDisplayPhones = async () => {
+// Unified function to fetch and display phones
+const fetchAndDisplayPhones = async (url) => {
     try {
-        const phones = await loadPhoneWithAsync();
+        const phones = await fetchPhoneData(url);
         displayPhones(phones);
     } catch (error) {
         // Handle any errors that occurred during the fetch
@@ -39,15 +28,8 @@ const fetchAndDisplayPhones = async () => {
     }
 };
 
-// Call the loadPhoneWithPromise method
-const fetchAndDisplayPhonesWithPromise = () => {
-    loadPhoneWithPromise()
-        .then(phones => displayPhones(phones))
-        .catch(error => {
-            // Handle any errors that occurred during the fetch
-            console.error("Error handling in promise function:", error);
-        });
-};
+// URL for fetching phone data
+const phoneDataUrl = 'https://openai.programminghero.com/api/phones?search=iphone';
 
-fetchAndDisplayPhones();
-fetchAndDisplayPhonesWithPromise();
+// Call the unified function
+fetchAndDisplayPhones(phoneDataUrl);
