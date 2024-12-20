@@ -4,12 +4,15 @@ async function fetchPosts(url) {
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.statusText}`);
         }
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (error) {
-        console.error('Error fetching posts:', error);
+        handleError('Error fetching posts:', error);
         return null;
     }
+}
+
+function handleError(message, error) {
+    console.error(message, error);
 }
 
 async function displayPosts(url) {
@@ -35,4 +38,7 @@ function logPostTitles(posts) {
 displayPosts('https://jsonplaceholder.typicode.com/posts');
 
 // Example usage of the new method
-fetchPosts('https://jsonplaceholder.typicode.com/posts').then(logPostTitles);
+(async () => {
+    const posts = await fetchPosts('https://jsonplaceholder.typicode.com/posts');
+    logPostTitles(posts);
+})();
