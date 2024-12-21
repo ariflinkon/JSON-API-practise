@@ -1,19 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML DOM NodeList Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
 <body>
-<h1>HTML DOM NodeList</h1>
+    <h1>HTML DOM NodeList</h1>
 
-<p>Hello World!</p>
-<p>Hello Norway!</p>
+    <p>Hello World!</p>
+    <p>Hello Norway!</p>
+    <p>Hello JavaScript!</p>
 
-<p id="demo"></p>
+    <button id="highlightBtn">Highlight Paragraphs</button>
+    <button id="addParagraphBtn">Add Paragraph</button>
 
-<script>
-const myNodelist = document.querySelectorAll("p");
+    <p id="demo"></p>
 
-document.getElementById("demo").textContent = 
-  `The text content of the second paragraph is: ${myNodelist[1].textContent}`;
-</script>
+    <script>
+        const myNodelist = document.querySelectorAll("p");
+        const demo = document.getElementById("demo");
+        const highlightBtn = document.getElementById("highlightBtn");
+        const addParagraphBtn = document.getElementById("addParagraphBtn");
 
+        // Display the text content of the second paragraph
+        demo.textContent = `The text content of the second paragraph is: ${myNodelist[1].textContent}`;
+
+        // Function to highlight paragraphs
+        function highlightParagraphs() {
+            myNodelist.forEach(p => p.classList.toggle("highlight"));
+        }
+
+        // Function to add a new paragraph
+        function addParagraph() {
+            const newP = document.createElement("p");
+            newP.textContent = `Hello Paragraph ${myNodelist.length + 1}!`;
+            document.body.insertBefore(newP, demo);
+            updateParagraphCount();
+        }
+
+        // Function to update paragraph count
+        function updateParagraphCount() {
+            demo.textContent += `\nTotal paragraphs: ${document.querySelectorAll("p").length}`;
+        }
+
+        // Event listeners
+        highlightBtn.addEventListener("click", highlightParagraphs);
+        addParagraphBtn.addEventListener("click", addParagraph);
+
+        // Initial paragraph count
+        updateParagraphCount();
+    </script>
 </body>
 </html>
