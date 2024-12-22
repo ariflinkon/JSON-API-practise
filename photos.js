@@ -1,10 +1,14 @@
+const fetchData = async (url) => {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+};
+
 const fetchPhotos = async (url) => {
     try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
+        const data = await fetchData(url);
         const filteredData = filterPhotosByAlbum(data, 1); // Filter photos by album ID 1
         const sortedData = sortPhotosByTitle(filteredData); // Sort photos by title
         displayPhotos(sortedData);
@@ -13,22 +17,20 @@ const fetchPhotos = async (url) => {
     }
 };
 
-const filterPhotosByAlbum = (data, albumId) => {
-    return data.filter(photo => photo.albumId === albumId);
-};
+const filterPhotosByAlbum = (data, albumId) => 
+    data.filter(({ albumId: id }) => id === albumId);
 
-const sortPhotosByTitle = (data) => {
-    return data.sort((a, b) => a.title.localeCompare(b.title));
-};
+const sortPhotosByTitle = (data) => 
+    data.sort((a, b) => a.title.localeCompare(b.title));
 
 const displayPhotos = (data) => {
     const photosContainer = document.getElementById('photos');
-    data.slice(0, 5000).forEach(photo => {
+    data.slice(0, 5000).forEach(({ thumbnailUrl, title }) => {
         const photoItem = document.createElement('div');
         photoItem.className = 'p-4 bg-gray-100 rounded shadow';
         photoItem.innerHTML = `
-            <img src="${photo.thumbnailUrl}" alt="${photo.title}" class="w-full h-auto mb-2 rounded border border-gray-300">
-            <p class="text-sm">${photo.title}</p>
+            <img src="${thumbnailUrl}" alt="${title}" class="w-full h-auto mb-2 rounded border border-gray-300">
+            <p class="text-sm">${title}</p>
         `;
         photosContainer.appendChild(photoItem);
     });
