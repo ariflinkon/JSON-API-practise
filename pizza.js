@@ -29,14 +29,15 @@ const disPlayPizza = (data) => {
   }
 };
 
-const pizza = () => {
-  fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=pizza')
-    .then(res => {
-      if (!res.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return res.json();
-    })
-    .then(data => disPlayPizza(data))
-    .catch(error => console.error('There was a problem with the fetch operation:', error));
+const pizza = async () => {
+  try {
+    const res = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=pizza');
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await res.json();
+    disPlayPizza(data);
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+  }
 };
