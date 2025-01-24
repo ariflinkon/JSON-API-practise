@@ -1,31 +1,17 @@
-const Meals = async () => {
-  const userData = {
-    id: 1,
-    name: 'Updated Name',
-    body: 'Updated body text'
-  };
-
+const fetchData = async (url, options) => {
   try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/comments/1', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userData)
-    });
-
+    const response = await fetch(url, options);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-
-    const data = await response.json();
-    myDisplay(data);
+    return await response.json();
   } catch (error) {
     console.error('There was a problem with the fetch operation:', error);
+    throw error;
   }
-}
+};
 
-const myDisplay = (data) => {
+const updateDOM = (data) => {
   const container = document.getElementById('meals');
   if (container) {
     const newDiv = document.createElement('div');
@@ -37,11 +23,35 @@ const myDisplay = (data) => {
   } else {
     console.error('Container element not found');
   }
-}
+};
+
+const Meals = async () => {
+  const userData = {
+    id: 1,
+    name: 'Updated Name',
+    body: 'Updated body text'
+  };
+
+  const url = 'https://jsonplaceholder.typicode.com/comments/1';
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userData)
+  };
+
+  try {
+    const data = await fetchData(url, options);
+    updateDOM(data);
+  } catch (error) {
+    // Error handling is already done in fetchData
+  }
+};
 
 const anotherMethod = () => {
   console.log('This is another method');
   // You can add more functionality here
-}
+};
 
 document.getElementById('submit').addEventListener('click', Meals);
