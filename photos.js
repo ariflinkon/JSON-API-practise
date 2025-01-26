@@ -6,11 +6,11 @@ const fetchData = async (url) => {
     return response.json();
 };
 
-const fetchPhotos = async (url) => {
+const fetchPhotos = async (url, albumId = 1) => {
     try {
         const data = await fetchData(url);
-        const filteredData = filterPhotosByAlbum(data, 1); // Filter photos by album ID 1
-        const sortedData = sortPhotosByTitle(filteredData); // Sort photos by title
+        const filteredData = filterPhotosByAlbum(data, albumId);
+        const sortedData = sortPhotosByTitle(filteredData);
         displayPhotos(sortedData);
     } catch (error) {
         console.error('Error fetching photos:', error);
@@ -25,6 +25,7 @@ const sortPhotosByTitle = (data) =>
 
 const displayPhotos = (data) => {
     const photosContainer = document.getElementById('photos');
+    photosContainer.innerHTML = ''; // Clear existing photos
     data.slice(0, 5000).forEach(({ thumbnailUrl, title }) => {
         const photoItem = document.createElement('div');
         photoItem.className = 'p-4 bg-gray-100 rounded shadow';
@@ -36,5 +37,5 @@ const displayPhotos = (data) => {
     });
 };
 
-// Call the function with a dynamic URL
-fetchPhotos('https://jsonplaceholder.typicode.com/photos');
+// Call the function with a dynamic URL and optional album ID
+fetchPhotos('https://jsonplaceholder.typicode.com/photos', 1);
