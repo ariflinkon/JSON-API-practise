@@ -2,9 +2,10 @@ async function fetchComments(baseUrl) {
     try {
         const response = await fetch(`${baseUrl}/comments`);
         const data = await response.json();
-        console.log(data);
+        return data;
     } catch (error) {
         console.error('Error fetching comments:', error);
+        throw error;
     }
 }
 
@@ -12,9 +13,10 @@ async function fetchCommentsByPostId(baseUrl, postId) {
     try {
         const response = await fetch(`${baseUrl}/comments?postId=${postId}`);
         const data = await response.json();
-        console.log(data);
+        return data;
     } catch (error) {
         console.error(`Error fetching comments for post ID ${postId}:`, error);
+        throw error;
     }
 }
 
@@ -32,21 +34,21 @@ function fetchCommentsByPostIdWithCallback(baseUrl, postId, callback) {
         .catch(error => callback(error, null));
 }
 
-// Example usage with callbacks
+// Example usage with async/await
 const baseUrl = 'https://jsonplaceholder.typicode.com';
 
-fetchCommentsWithCallback(baseUrl, (error, data) => {
-    if (error) {
+(async () => {
+    try {
+        const comments = await fetchComments(baseUrl);
+        console.log(comments);
+    } catch (error) {
         console.error('Error fetching comments:', error);
-    } else {
-        console.log(data);
     }
-});
 
-fetchCommentsByPostIdWithCallback(baseUrl, 1, (error, data) => {
-    if (error) {
+    try {
+        const commentsByPostId = await fetchCommentsByPostId(baseUrl, 1);
+        console.log(commentsByPostId);
+    } catch (error) {
         console.error('Error fetching comments for post ID 1:', error);
-    } else {
-        console.log(data);
     }
-});
+})();
