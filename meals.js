@@ -11,27 +11,35 @@ const fetchData = async (url, options) => {
   }
 };
 
+const createMealElement = (data) => {
+  const newDiv = document.createElement('div');
+  newDiv.id = 'newDiv';
+  newDiv.innerHTML = `<h2>${data.name}</h2>
+                      <p>${data.body}</p>`;
+  return newDiv;
+};
+
 const updateDOM = (data) => {
   const container = document.getElementById('meals');
   if (container) {
-    const newDiv = document.createElement('div');
-    newDiv.id = 'newDiv';
-    newDiv.innerHTML = `<h2>${data.name}</h2>
-                        <p>${data.body}</p>`;
-    container.appendChild(newDiv);
+    const mealElement = createMealElement(data);
+    container.appendChild(mealElement);
     console.log(data);
   } else {
     console.error('Container element not found');
   }
 };
 
-const Meals = async () => {
-  const userData = {
+const getUserData = () => {
+  return {
     id: 1,
     name: 'Updated Name',
     body: 'Updated body text'
   };
+};
 
+const Meals = async () => {
+  const userData = getUserData();
   const url = 'https://jsonplaceholder.typicode.com/comments/1';
   const options = {
     method: 'PUT',
