@@ -23,16 +23,21 @@ const filterPhotosByAlbum = (data, albumId) =>
 const sortPhotosByTitle = (data) => 
     data.sort((a, b) => a.title.localeCompare(b.title));
 
+const createPhotoElement = ({ thumbnailUrl, title }) => {
+    const photoItem = document.createElement('div');
+    photoItem.className = 'p-4 bg-gray-100 rounded shadow';
+    photoItem.innerHTML = `
+        <img src="${thumbnailUrl}" alt="${title}" class="w-full h-auto mb-2 rounded border border-gray-300">
+        <p class="text-sm">${title}</p>
+    `;
+    return photoItem;
+};
+
 const displayPhotos = (data) => {
     const photosContainer = document.getElementById('photos');
     photosContainer.innerHTML = ''; // Clear existing photos
-    data.slice(0, 5000).forEach(({ thumbnailUrl, title }) => {
-        const photoItem = document.createElement('div');
-        photoItem.className = 'p-4 bg-gray-100 rounded shadow';
-        photoItem.innerHTML = `
-            <img src="${thumbnailUrl}" alt="${title}" class="w-full h-auto mb-2 rounded border border-gray-300">
-            <p class="text-sm">${title}</p>
-        `;
+    data.slice(0, 5000).forEach(photo => {
+        const photoItem = createPhotoElement(photo);
         photosContainer.appendChild(photoItem);
     });
 };
