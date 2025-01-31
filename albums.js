@@ -1,12 +1,19 @@
-// Method to fetch and display phone data
-const loadPhone = async () => { 
+// Function to fetch data from a given URL
+const fetchData = async (url) => {
     try {
-        const res = await fetch('https://openai.programminghero.com/api/phones?search=iphone');
-        const data = await res.json();
-        const phones = data.results;
-        displayPhones(phones);
+        const response = await fetch(url);
+        return await response.json();
     } catch (error) {
-        console.error("Error fetching phone data:", error);
+        console.error("Error fetching data:", error);
+        return null;
+    }
+};
+
+// Method to fetch and display phone data
+const loadPhone = async () => {
+    const data = await fetchData('https://openai.programminghero.com/api/phones?search=iphone');
+    if (data && data.results) {
+        displayPhones(data.results);
     }
 };
 
@@ -18,15 +25,12 @@ const displayPhones = phones => {
 };
 
 // Method to fetch and display comments
-async function fetchComments() {
-    try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/albums');
-        const data = await response.json();
+const fetchComments = async () => {
+    const data = await fetchData('https://jsonplaceholder.typicode.com/albums');
+    if (data) {
         console.log(data);
-    } catch (error) {
-        console.error('Error fetching data:', error);
     }
-}
+};
 
 // Call the methods
 loadPhone();
