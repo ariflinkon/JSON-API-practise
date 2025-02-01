@@ -7,16 +7,24 @@ async function updateTodoAsync(id, updatedData) {
             },
             body: JSON.stringify(updatedData)
         });
+        if (!response.ok) {
+            throw new Error('Failed to update the todo');
+        }
         const data = await response.json();
         console.log('Todo updated:', data);
+        return data;
     } catch (error) {
         console.error('Error updating todo:', error);
+        throw error;
     }
 }
 
 async function fetchTodosAsync() {
     try {
         const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+        if (!response.ok) {
+            throw new Error('Failed to fetch todos');
+        }
         const data = await response.json();
         displayTodos(data);
     } catch (error) {
@@ -26,6 +34,7 @@ async function fetchTodosAsync() {
 
 function displayTodos(data) {
     const todosContainer = document.getElementById('todos-list');
+    todosContainer.innerHTML = ''; // Clear existing todos
     data.forEach(todo => {
         const todoItem = document.createElement('div');
         todoItem.className = 'p-4 bg-gray-100 rounded shadow';
@@ -35,8 +44,12 @@ function displayTodos(data) {
         deleteButton.textContent = 'Delete';
         deleteButton.className = 'ml-2 bg-red-500 text-white p-1 rounded';
         deleteButton.addEventListener('click', async () => {
-            await deleteTodoAsync(todo.id);
-            todosContainer.removeChild(todoItem);
+            try {
+                await deleteTodoAsync(todo.id);
+                todosContainer.removeChild(todoItem);
+            } catch (error) {
+                console.error('Error deleting todo:', error);
+            }
         });
 
         todoItem.appendChild(deleteButton);
@@ -44,9 +57,13 @@ function displayTodos(data) {
         todoItem.addEventListener('click', async () => {
             const updatedTitle = prompt('Enter new title:', todo.title);
             if (updatedTitle) {
-                await updateTodoAsync(todo.id, { title: updatedTitle });
-                todoItem.textContent = updatedTitle;
-                todoItem.appendChild(deleteButton);
+                try {
+                    const updatedTodo = await updateTodoAsync(todo.id, { title: updatedTitle });
+                    todoItem.textContent = updatedTodo.title;
+                    todoItem.appendChild(deleteButton);
+                } catch (error) {
+                    console.error('Error updating todo:', error);
+                }
             }
         });
 
@@ -59,13 +76,13 @@ async function deleteTodoAsync(id) {
         const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
             method: 'DELETE'
         });
-        if (response.ok) {
-            console.log(`Todo with id ${id} deleted successfully.`);
-        } else {
+        if (!response.ok) {
             throw new Error('Failed to delete the todo');
         }
+        console.log(`Todo with id ${id} deleted successfully.`);
     } catch (error) {
         console.error('Error deleting todo:', error);
+        throw error;
     }
 }
 
