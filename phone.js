@@ -1,5 +1,5 @@
 // Function to fetch phone data
-const fetchPhoneData = async (url) => {
+async function fetchPhoneData(url) {
     try {
         const response = await fetch(url);
         const data = await response.json();
@@ -8,17 +8,17 @@ const fetchPhoneData = async (url) => {
         console.error("Error fetching phone data:", error);
         throw error; // Re-throw the error for further handling
     }
-};
+}
 
 // Method to display phone data
-const displayPhones = phones => {
+function displayPhones(phones) {
     phones.forEach(phone => {
         console.log(phone.phone_name);
     });
-};
+}
 
 // Unified function to fetch and display phones
-const fetchAndDisplayPhones = async (url) => {
+async function fetchAndDisplayPhones(url) {
     try {
         const phones = await fetchPhoneData(url);
         displayPhones(phones);
@@ -26,7 +26,7 @@ const fetchAndDisplayPhones = async (url) => {
         // Handle any errors that occurred during the fetch
         console.error("Error handling in async function:", error);
     }
-};
+}
 
 // URL for fetching phone data
 const phoneDataUrl = 'https://openai.programminghero.com/api/phones?search=iphone';
