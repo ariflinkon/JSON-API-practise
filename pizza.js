@@ -1,3 +1,27 @@
+const createPizzaCard = (pizza) => {
+  const pizzaCard = document.createElement('div');
+  pizzaCard.classList.add('pizza-card');
+
+  const pizzaImage = document.createElement('img');
+  pizzaImage.src = pizza.strMealThumb;
+  pizzaImage.alt = pizza.strMeal;
+  pizzaCard.appendChild(pizzaImage);
+
+  const pizzaId = document.createElement('h1');
+  pizzaId.textContent = `ID: ${pizza.idMeal}`;
+  pizzaCard.appendChild(pizzaId);
+
+  const pizzaTitle = document.createElement('h2');
+  pizzaTitle.textContent = pizza.strMeal;
+  pizzaCard.appendChild(pizzaTitle);
+
+  const pizzaInstructions = document.createElement('p');
+  pizzaInstructions.textContent = pizza.strInstructions;
+  pizzaCard.appendChild(pizzaInstructions);
+
+  return pizzaCard;
+};
+
 const displayPizzas = (data) => {
   const pizzaDiv = document.getElementById('pizzas');
   if (!pizzaDiv) {
@@ -11,26 +35,7 @@ const displayPizzas = (data) => {
   }
 
   data.meals.forEach(pizza => {
-    const pizzaCard = document.createElement('div');
-    pizzaCard.classList.add('pizza-card');
-
-    const pizzaImage = document.createElement('img');
-    pizzaImage.src = pizza.strMealThumb;
-    pizzaImage.alt = pizza.strMeal;
-    pizzaCard.appendChild(pizzaImage);
-
-    const pizzaId = document.createElement('h1');
-    pizzaId.textContent = `ID: ${pizza.idMeal}`;
-    pizzaCard.appendChild(pizzaId);
-
-    const pizzaTitle = document.createElement('h2');
-    pizzaTitle.textContent = pizza.strMeal;
-    pizzaCard.appendChild(pizzaTitle);
-
-    const pizzaInstructions = document.createElement('p');
-    pizzaInstructions.textContent = pizza.strInstructions;
-    pizzaCard.appendChild(pizzaInstructions);
-
+    const pizzaCard = createPizzaCard(pizza);
     pizzaDiv.appendChild(pizzaCard);
   });
 };
