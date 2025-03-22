@@ -29,6 +29,8 @@ const displayPizzas = (data) => {
     return;
   }
 
+  pizzaDiv.innerHTML = ''; // Clear previous results
+
   if (!data.meals || data.meals.length === 0) {
     console.error('Pizza data is not available');
     return;
@@ -40,9 +42,9 @@ const displayPizzas = (data) => {
   });
 };
 
-const fetchPizzaData = async () => {
+const fetchPizzaData = async (searchTerm = 'pizza') => {
   try {
-    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=pizza');
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -53,5 +55,5 @@ const fetchPizzaData = async () => {
   }
 };
 
-// Call the function to fetch and display pizza data
+// Call the function to fetch and display pizza data with a default search term
 fetchPizzaData();
