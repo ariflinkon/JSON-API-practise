@@ -18,11 +18,7 @@ function handleError(message, error) {
 async function displayPosts(url) {
     const posts = await fetchPosts(url);
     if (posts) {
-        posts.forEach(post => {
-            console.log(`Title: ${post.title}`);
-            console.log(`Body: ${post.body}`);
-            console.log('---');
-        });
+        logPostDetails(posts);
     }
 }
 
@@ -30,6 +26,16 @@ function logPostTitles(posts) {
     if (posts) {
         posts.forEach(post => {
             console.log(`Title: ${post.title}`);
+        });
+    }
+}
+
+function logPostDetails(posts) {
+    if (posts) {
+        posts.forEach(post => {
+            console.log(`Title: ${post.title}`);
+            console.log(`Body: ${post.body}`);
+            console.log('---');
         });
     }
 }
