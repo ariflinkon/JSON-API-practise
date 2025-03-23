@@ -1,45 +1,17 @@
-const fetchData = async (url, options) => {
-  try {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-    throw error;
-  }
-};
+// ... existing code
 
-const createMealElement = (data) => {
-  const newDiv = document.createElement('div');
-  newDiv.id = 'newDiv';
-  newDiv.innerHTML = `<h2>${data.name}</h2>
-                      <p>${data.body}</p>`;
-  return newDiv;
-};
-
-const updateDOM = (data) => {
-  const container = document.getElementById('meals');
-  if (container) {
-    const mealElement = createMealElement(data);
-    container.appendChild(mealElement);
-    console.log(data);
-  } else {
-    console.error('Container element not found');
-  }
-};
-
-const getUserData = () => {
+const getUserDataFromForm = () => {
+  const name = document.getElementById('nameInput').value;
+  const body = document.getElementById('bodyInput').value;
   return {
-    id: 1,
-    name: 'Updated Name',
-    body: 'Updated body text'
+    id: 1, // Assuming the ID is fixed for this example
+    name: name || 'Default Name',
+    body: body || 'Default body text'
   };
 };
 
 const Meals = async () => {
-  const userData = getUserData();
+  const userData = getUserDataFromForm();
   const url = 'https://jsonplaceholder.typicode.com/comments/1';
   const options = {
     method: 'PUT',
