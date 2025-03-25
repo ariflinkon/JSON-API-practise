@@ -30,23 +30,23 @@ const displayPhones = phones => {
     }
 };
 
-// Method to fetch and display comments
-const fetchComments = async () => {
+// Method to fetch and display albums
+const fetchAlbums = async () => {
     const data = await fetchData('https://jsonplaceholder.typicode.com/albums');
     if (data && data.length > 0) {
-        displayComments(data);
+        displayAlbums(data);
     } else {
-        console.log("No comments available.");
+        console.log("No albums available.");
     }
 };
 
-// Method to display comments
-const displayComments = comments => {
-    comments.forEach(comment => {
-        console.log(`Album ID: ${comment.id}, Title: ${comment.title}`);
+// Method to display albums
+const displayAlbums = albums => {
+    albums.forEach(album => {
+        console.log(`Album ID: ${album.id}, Title: ${album.title}`);
     });
 };
 
 // Call the methods
 loadPhone();
-fetchComments();
+fetchAlbums();
