@@ -15,17 +15,22 @@
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                const albumsDiv = document.getElementById('albums');
-                data.forEach(album => {
-                    const albumElement = document.createElement('div');
-                    albumElement.textContent = album.title;
-                    albumElement.className = "bg-white p-4 rounded shadow";
-                    albumsDiv.appendChild(albumElement);
-                });
+                displayAlbums(data);
             } catch (error) {
                 console.error('There has been a problem with your fetch operation:', error);
             }
         }
+
+        const displayAlbums = (albums) => {
+            const albumsDiv = document.getElementById('albums');
+            albums.forEach(album => {
+                const albumElement = document.createElement('div');
+                albumElement.textContent = album.title;
+                albumElement.className = "bg-white p-4 rounded shadow";
+                albumsDiv.appendChild(albumElement);
+            });
+        }
+
         fetchAlbums();
     </script>
 </body>
