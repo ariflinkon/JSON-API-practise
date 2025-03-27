@@ -32,7 +32,9 @@ const displayPizzas = (data) => {
   pizzaDiv.innerHTML = ''; // Clear previous results
 
   if (!data.meals || data.meals.length === 0) {
-    console.error('Pizza data is not available');
+    const noDataMessage = document.createElement('p');
+    noDataMessage.textContent = 'No pizza data available.';
+    pizzaDiv.appendChild(noDataMessage);
     return;
   }
 
