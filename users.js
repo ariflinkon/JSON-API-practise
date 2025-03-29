@@ -1,4 +1,7 @@
 async function fetchUsers() {
+    const usersList = document.getElementById('usersList');
+    usersList.innerHTML = '<li>Loading...</li>'; // Show loading indicator
+
     try {
         const response = await fetch('https://jsonplaceholder.typicode.com/users');
         
@@ -14,6 +17,7 @@ async function fetchUsers() {
         displayUsers(usersData);
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
+        usersList.innerHTML = '<li>Error loading users</li>'; // Show error message
     }
 }
 
