@@ -42,5 +42,12 @@ const displayPhotos = (data) => {
     });
 };
 
+// New function to handle user input for album ID
+const handleUserInput = () => {
+    const albumIdInput = document.getElementById('albumIdInput');
+    const albumId = parseInt(albumIdInput.value, 10) || 1; // Default to 1 if input is invalid
+    fetchPhotos('https://jsonplaceholder.typicode.com/photos', albumId);
+};
+
 // Call the function with a dynamic URL and optional album ID
-fetchPhotos('https://jsonplaceholder.typicode.com/photos', 1);
+document.getElementById('fetchButton').addEventListener('click', handleUserInput);
