@@ -1,3 +1,17 @@
+// Add an event listener to handle the search functionality
+document.addEventListener('DOMContentLoaded', () => {
+  const searchForm = document.getElementById('searchForm');
+  const searchInput = document.getElementById('searchInput');
+
+  searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const searchTerm = searchInput.value.trim();
+    if (searchTerm) {
+      fetchPizzaData(searchTerm);
+    }
+  });
+});
+
 const createPizzaCard = (pizza) => {
   const pizzaCard = document.createElement('div');
   pizzaCard.classList.add('pizza-card');
@@ -57,5 +71,5 @@ const fetchPizzaData = async (searchTerm = 'pizza') => {
   }
 };
 
-// Call the function to fetch and display pizza data with a default search term
+// Initial fetch to display default pizza data
 fetchPizzaData();
