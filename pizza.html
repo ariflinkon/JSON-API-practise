@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizza API</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizza Search</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>Pizza API</header>
-
-    <div class="pizzas" id="pizzas">
-        <!-- Fetching data from the API -->
-        <!-- Displaying the fetched data in HTML -->
-    </div>
-    <div>
-        <button id="check-image" onclick="pizza()">Check Image</button>
-    </div>
-
-    <script src="pizza.js"></script>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Pizza Search</h1>
+    <form id="searchForm" class="form-inline justify-content-center mb-4">
+      <input type="text" id="searchInput" class="form-control mr-2" placeholder="Search for a pizza..." required>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <div id="pizzas" class="row"></div>
+  </div>
+  <script src="pizza.js"></script>
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
