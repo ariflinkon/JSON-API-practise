@@ -1,6 +1,9 @@
 async function fetchComments(baseUrl) {
     try {
         const response = await fetch(`${baseUrl}/comments`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         return data;
     } catch (error) {
@@ -12,6 +15,9 @@ async function fetchComments(baseUrl) {
 async function fetchCommentsByPostId(baseUrl, postId) {
     try {
         const response = await fetch(`${baseUrl}/comments?postId=${postId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         return data;
     } catch (error) {
@@ -22,14 +28,24 @@ async function fetchCommentsByPostId(baseUrl, postId) {
 
 function fetchCommentsWithCallback(baseUrl, callback) {
     fetch(`${baseUrl}/comments`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => callback(null, data))
         .catch(error => callback(error, null));
 }
 
 function fetchCommentsByPostIdWithCallback(baseUrl, postId, callback) {
     fetch(`${baseUrl}/comments?postId=${postId}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => callback(null, data))
         .catch(error => callback(error, null));
 }
