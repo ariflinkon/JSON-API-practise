@@ -1,50 +1,37 @@
-async function fetchPosts(url) {
+const fetchJSON = async (url) => {
     try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-        return await response.json();
-    } catch (error) {
-        handleError('Error fetching posts:', error);
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Failed to fetch: ${res.statusText}`);
+        return res.json();
+    } catch (err) {
+        console.error('Fetch error:', err);
         return null;
     }
-}
+};
 
-function handleError(message, error) {
-    console.error(message, error);
-}
-
-async function displayPosts(url) {
-    const posts = await fetchPosts(url);
-    if (posts) {
-        logPostDetails(posts);
-    }
-}
-
-function logPostTitles(posts) {
-    if (posts) {
-        posts.forEach(post => {
-            console.log(`Title: ${post.title}`);
-        });
-    }
-}
-
-function logPostDetails(posts) {
-    if (posts) {
-        posts.forEach(post => {
-            console.log(`Title: ${post.title}`);
-            console.log(`Body: ${post.body}`);
+const logPosts = {
+    titles(posts) {
+        posts?.forEach(({ title }) => console.log(`Title: ${title}`));
+    },
+    details(posts) {
+        posts?.forEach(({ title, body }) => {
+            console.log(`Title: ${title}`);
+            console.log(`Body: ${body}`);
             console.log('---');
         });
     }
-}
+};
 
-// Call the function with a dynamic URL
-displayPosts('https://jsonplaceholder.typicode.com/posts');
+const displayPosts = async (url) => {
+    const posts = await fetchJSON(url);
+    if (posts) logPosts.details(posts);
+};
 
-// Example usage of the new method
+// Example usage
+const url = 'https://jsonplaceholder.typicode.com/posts';
+displayPosts(url);
+
 (async () => {
-    const posts = await fetchPosts('https://jsonplaceholder.typicode.com/posts');
-    logPostTitles(posts);
+    const posts = await fetchJSON(url);
+    logPosts.titles(posts);
 })();
